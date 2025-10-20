@@ -1,14 +1,20 @@
 {
   "name": "harrypotter",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cls && nodemon server.js",
+    "studio": "npx prisma studio"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": [
+    "backend",
+    "banco"
+  ],
+  "author": "Arthur Morais",
+  "license": "MIT",
+  "description": "Repositório linkando banco de dados com o projeto",
   "dependencies": {
     "@prisma/client": "^6.17.1",
     "dotenv": "^17.2.3",
