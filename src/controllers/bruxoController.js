@@ -24,6 +24,33 @@ export const listarTodos = async (req, res) => {
             erro: 'Erro interno de servidor',
             detalhes: error.message,
             status: 500
+        });
+    }
+}
+
+export const listarUm = async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        const bruxo = await BruxoModel.encontreUm(id);
+
+        if(!bruxo){
+            return res.status(404).json({
+                erro: "Bruxo não encontrado",
+                mensagem: 'Verifique o id do bruxo',
+                id: id
+            })
+        }
+
+        res.statis(200)({
+            message: 'Bruxo encontrado',
+            bruxo
+        })
+        
+    } catch (error) {
+        res.status(500).json({
+            erro: 'Erro interno de servidor',
+            detalhes: error.message,
+            status: 500
         })
     }
 }

@@ -13,3 +13,10 @@ export const encontreTodos = async () => {
         orderBy: { nome: 'asc' }
     });
 }
+
+export const encontreUm = async () => {
+    // SELECT * FROM bruxos WHERE id = 1;
+    return await prisma.bruxo.findUnique({
+        where: { id: Numver(id) }
+    })
+}
