@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import bruxosRoutes from './src/routes/bruxoRoute.js'
 
 const app = express();
 
@@ -12,8 +13,10 @@ app.get("/", (req, res) => {
   res.send("Bruuuuuuuxosss");
 });
 
+app.use('/bruxos', bruxosRoutes);
+
 app.listen(serverPort, () => {
   console.log(
-    ` Servidor Barbie foi iniciado em: http://localhost:${serverPort}`
+    ` Servidor Bruxos foi iniciado em: http://localhost:${serverPort}`
   );
 });
