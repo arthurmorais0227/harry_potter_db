@@ -41,11 +41,11 @@ export const listarUm = async (req, res) => {
             })
         }
 
-        res.statis(200)({
+        res.status(200)({
             message: 'Bruxo encontrado',
             bruxo
         })
-        
+
     } catch (error) {
         res.status(500).json({
             erro: 'Erro interno de servidor',
