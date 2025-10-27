@@ -97,28 +97,68 @@ export const criar = async (req, res) => {
 
 export const deletar = async (req, res) => {
   try {
-        const id = parseInt(req.params.id)
+    const id = parseInt(req.params.id);
 
-        //verificar se o id existe, ou seja, se tem bruxo com esse id
-        const bruxoExiste = await BruxoModel.encontreUm(id);
+    //verificar se o id existe, ou seja, se tem bruxo com esse id
+    const bruxoExiste = await BruxoModel.encontreUm(id);
 
-        if(!bruxoExiste){
-            return res.status(404).json({
-                erro: 'Bruxo não encontrado com esse id',
-                id: id
-            })
-        }
+    if (!bruxoExiste) {
+      return res.status(404).json({
+        erro: "Bruxo não encontrado com esse id",
+        id: id,
+      });
+    }
 
-        await BruxoModel.deletar(id) 
+    await BruxoModel.deletar(id);
 
-        res.status(200).json({
-            mensagem: 'Bruxo apagado com sucesso!',
-            bruxoRemovido: bruxoExiste
-        })
-        
+    res.status(200).json({
+      mensagem: "Bruxo apagado com sucesso!",
+      bruxoRemovido: bruxoExiste,
+    });
   } catch (error) {
     res.status(500).json({
       erro: "Erro ao apagar bruxo",
+      detalhes: error.message,
+    });
+  }
+};
+
+export const atualizar = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const dados = req.body;
+
+    //Verificar se o bruxo existe
+    const bruxoExiste = await BruxoModel.encontreUm(id);
+
+    if (!bruxoExiste) {
+      return res.status(404).json({
+        erro: "Bruxo não existe!",
+        id: id,
+      });
+    }
+
+    // Validar se a casa é válida
+
+    if (dados.casa) {
+      const casasValidas = ["Grifinória", "Sonserina", "Corvinal", "Lufa-Lufa"];
+      if (!casasValidas.includes(dados.casa)) {
+        return res.status(400).json({
+          erro: "Casa inválida! O Chapéu Seletor só reconhece as 4 casas",
+          casasValidas,
+        });
+      }
+    }
+
+    const bruxoAtualizado = await BruxoModel.atualizar(id, dados);
+
+    res.status(200).json({
+        mensagem: 'Bruxo atualizado com sucesso!',
+        bruxo: bruxoAtualizado
+    });
+  } catch (error) {
+    res.status(500).json({
+      erro: "Erro ao atualizar bruxo",
       detalhes: error.message,
     });
   }
